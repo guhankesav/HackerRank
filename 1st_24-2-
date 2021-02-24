@@ -101,36 +101,30 @@ def evaluateExpressionTree(root):
 def constructTree(postfix):
 	stack = []
 
-	# Traverse through every character of input expression
 	for char in postfix :
 
-		# if operand, simply push into stack
 		if not isOperator(char):
 			t = Et(char)
 			stack.append(t)
 
-		# Operator
 		else:
 
-			# Pop two top nodes
 			t = Et(char)
 			t1 = stack.pop()
 			t2 = stack.pop()
 			
-			# make them children
 			t.right = t1
 			t.left = t2
 			
 			stack.append(t)
 
-	# Only element will be the root of expression tree
 	t = stack.pop()
 	return t
 
 # Driver program to test above
 # postfix = "50,110,+,80,/,42,-,*"
-postfix = "50,110,+,5,2,*,1,*,-"
-postfix_list =  postfix.split(",")
+postfix = input()
+postfix_list =  postfix.split(" ")
 
 stack = []
 for i in postfix_list:
@@ -155,5 +149,7 @@ print("")
 
 
 print(evaluateExpressionTree(r))
-
+# print(my_list)
+# stringg=listToString(my_list)
+# print(eval(stringg))
 
