@@ -1,0 +1,159 @@
+
+class Et:
+
+	def __init__(self , value):
+		self.value = value
+		self.left = None
+		self.right = None
+
+
+my_list = []
+def listToString(s):  
+    
+    str1 = " " 
+    
+    # return string   
+    return (str1.join(s)) 
+def isOperator(c):
+	if (c == '+' or c == '-' or c == '*'or c == '/'):
+		return True
+	else:
+		return False
+def printStack(s):
+    temp = Stack()
+    while(s.count() > 0):
+        temp.push(s.peek())
+        s.pop()
+     
+    while(temp.count() > 0):
+        t = temp.peek()
+        print("{} " . format(temp.peek()), end = "")
+        temp.pop()
+ 
+        # Restore the contents of original stack
+        s.push(t)
+# A utility function to do inorder traversal
+def inorder(t):
+	if t is not None:
+	    inorder(t.left) 
+	    print(t.value,end=" ")
+	    my_list.append(t.value)
+	    inorder(t.right)
+def  egal(t):
+    if t is not None:
+	    l= str(inorder(t.left))
+	    res = isinstance(l, str) 
+	    if not res:
+	        l=""
+	        print(344)
+	    n = str(t.value)
+	    res = isinstance(n, str) 
+	    if not res:
+	        n=""
+	        print(344)
+	    r= str(inorder(t.right))
+	    res = isinstance(r, str) 
+	    if not res:
+	        r=""
+	        print(344)
+
+	    s = l + n + r
+
+	    return s;
+    return " ";
+    
+    
+	  
+def preorder(t):
+	if t is not None:
+	    print(t.value,end=" ")
+	    preorder(t.left) 
+	    preorder(t.right)
+
+def evaluateExpressionTree(root): 
+  
+    # empty tree 
+    if root is None: 
+        return 0
+  
+    # leaf node 
+    if root.left is None and root.right is None: 
+        return int(root.value) 
+  
+    # evaluate left tree 
+    left_sum = evaluateExpressionTree(root.left) 
+  
+    # evaluate right tree 
+    right_sum = evaluateExpressionTree(root.right) 
+  
+    if root.value == '+': 
+        return left_sum + right_sum 
+      
+    elif root.value == '-': 
+        return left_sum - right_sum 
+      
+    elif root.value == '*': 
+        return left_sum * right_sum 
+      
+    else: 
+        return left_sum / right_sum 
+
+def constructTree(postfix):
+	stack = []
+
+	# Traverse through every character of input expression
+	for char in postfix :
+
+		# if operand, simply push into stack
+		if not isOperator(char):
+			t = Et(char)
+			stack.append(t)
+
+		# Operator
+		else:
+
+			# Pop two top nodes
+			t = Et(char)
+			t1 = stack.pop()
+			t2 = stack.pop()
+			
+			# make them children
+			t.right = t1
+			t.left = t2
+			
+			stack.append(t)
+
+	# Only element will be the root of expression tree
+	t = stack.pop()
+	return t
+
+# Driver program to test above
+# postfix = "50,110,+,80,/,42,-,*"
+postfix = "50,110,+,5,2,*,1,*,-"
+postfix_list =  postfix.split(",")
+
+stack = []
+for i in postfix_list:
+    i = str(i)
+
+    if not isOperator(i):
+        t = Et(i)
+        stack.append(t)
+    else:
+        t = Et(i)
+        t1=stack.pop()
+        t2=stack.pop()
+        t.right=t1
+        t.left=t2
+        stack.append(t)
+t = stack.pop()
+r=t
+inorder(r)
+print("")
+preorder(r)
+print("")
+
+
+print(evaluateExpressionTree(r))
+
+
